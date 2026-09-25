@@ -7,16 +7,18 @@ export default async function CoursesPage() {
   return (
     <main className="p-8">
       <h1 className="text-3xl font-bold mb-6">Courses</h1>
-      {courses.map((course) => (
-        <CourseCard
-          key={course.id}
-          id={course.id}
-          title={course.title}
-          description={course.description}
-          credits={course.credits}
-          likes={course.likes}
-        />
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {courses.map((course) => (
+          <CourseCard
+            key={course.id}
+            id={course.id}
+            title={course.title}
+            description={course.description}
+            credits={course.credits}
+            likes={course.likes}
+          />
+        ))}
+      </div>
     </main>
   );
 }
