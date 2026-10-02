@@ -70,3 +70,11 @@ components/
 lib/
 └── courses.ts              ← mock data with simulated delay
 ```
+## Lab 2: Styling with Tailwind CSS and shadcn/ui
+
+Styled the existing catalog without changing its logic.
+
+- **shadcn/ui:** initialized with `npx shadcn@latest init`, and added the `button` and `card` components (`components/ui/`).
+- **`CourseCard`:** rewritten with `Card`, `CardHeader`, `CardTitle`, `CardContent` and `Button`. It is still a Server Component (no `'use client'`), and its props are unchanged. Cards have a hover effect (`hover:shadow-md hover:border-blue-300 transition`).
+- **Responsive course list:** a grid with 1 column on phones, 2 on tablets (`sm:`) and 3 on desktop (`lg:`). It lives in `CourseSearch`, which renders the cards. I checked each width in browser DevTools.
+- **Navigation:** the nav in `app/layout.tsx` is laid out in a row, with padding inside each link, a hover state, and a bottom border that separates it from the page.
