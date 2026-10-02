@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Course Catalog
+
+A course catalog web application built with **Next.js 16** (App Router), **TypeScript**, and **Tailwind CSS** for the "Advanced Web Technologies" course (Lab 1).
+
+## What's Implemented
+
+### Core Features
+
+- **File-based routing** with the App Router: `/`, `/about`, `/courses`, `/courses/[id]`
+- **Server Components** for all pages and `CourseCard` — data is fetched on the server with `await getCourses()` / `await getCourse(id)`
+- **Client Component** (`LikeButton`) — the only `'use client'` in the project, using `useState` for interactive like functionality
+- **Dynamic routes** with `params` typed as `Promise<{ id: string }>` and properly awaited
+- **`generateStaticParams`** to pre-render all course pages at build time
+- **`loading.tsx`** for a loading indicator during navigation (visible thanks to a 300 ms simulated delay)
+- **`not-found.tsx`** triggered via `notFound()` from `next/navigation` when a course ID doesn't exist
+- **Shared navigation** in `layout.tsx` with `next/link` (Home / Courses / About)
+
+### Bonus Features
+
+1. **Error Boundary** (`app/courses/error.tsx`) — navigating to `/courses/broken` deliberately throws an error caught by the Error Boundary, with a "Try again" button
+2. **Client-side search** on `/courses` — a `CourseSearch` Client Component filters the server-loaded course list by title in real time, while the page itself remains a Server Component
+3. **Route group** `(auth)/` with a `/login` stub page, demonstrating the route-group pattern from the lecture
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org/) (App Router)
+- [React 19](https://react.dev/)
+- [TypeScript 5](https://www.typescriptlang.org/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+├── layout.tsx              ← shared navigation
+├── page.tsx                ← "/" (home)
+├── about/
+│   └── page.tsx            ← "/about"
+├── courses/
+│   ├── page.tsx            ← "/courses" (course list + search)
+│   ├── not-found.tsx       ← shown when course not found
+│   ├── error.tsx           ← Error Boundary (bonus)
+│   └── [id]/
+│       ├── page.tsx        ← "/courses/:id" (dynamic route)
+│       └── loading.tsx     ← loading indicator
+└── (auth)/
+    └── login/
+        └── page.tsx        ← "/login" stub (bonus)
 
-## Learn More
+components/
+├── CourseCard.tsx           ← Server Component (card with Link)
+├── CourseSearch.tsx         ← Client Component (search filter, bonus)
+└── LikeButton.tsx          ← Client Component (❤ button with useState)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+lib/
+└── courses.ts              ← mock data with simulated delay
+```

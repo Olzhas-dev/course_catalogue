@@ -13,6 +13,11 @@ export default async function CoursePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
+  if (id === "broken") {
+    throw new Error("This error was thrown on purpose to test the Error Boundary.");
+  }
+
   const course = await getCourse(id);
 
   if (!course) {
