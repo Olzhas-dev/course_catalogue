@@ -78,3 +78,18 @@ Styled the existing catalog without changing its logic.
 - **`CourseCard`:** rewritten with `Card`, `CardHeader`, `CardTitle`, `CardContent` and `Button`. It is still a Server Component (no `'use client'`), and its props are unchanged. Cards have a hover effect (`hover:shadow-md hover:border-blue-300 transition`).
 - **Responsive course list:** a grid with 1 column on phones, 2 on tablets (`sm:`) and 3 on desktop (`lg:`). It lives in `CourseSearch`, which renders the cards. I checked each width in browser DevTools.
 - **Navigation:** the nav in `app/layout.tsx` is laid out in a row, with padding inside each link, a hover state, and a bottom border that separates it from the page.
+
+
+
+
+
+
+#Cors Breakage
+
+
+### Breakage 1: Remove CORS entirely
+- What I did: Commented out the `app.add_middleware(...)` block in `main.py`.
+- Console: "Access to fetch at 'http://localhost:8000/courses' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+- Network: `courses` and `like` requests show CORS error (red) but the backend terminal shows 200 OK. `OPTIONS enrollments` shows 405 Method Not Allowed, and the POST is never sent. 
+- Cause: The server does not have CORS enabled, so it didn't send the `access-control-allow-origin` header back to the browser.
+- How I found it: Step 3 (Response Headers: no access-control-allow-origin header) and Step 4 (OPTIONS status 405).
