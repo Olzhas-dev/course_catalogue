@@ -1,11 +1,45 @@
-import { getCourse, getCourses } from "@/lib/courses";
+// import { getCourse, getCourses } from "@/lib/courses";
+// import { notFound } from "next/navigation";
+// import LikeButton from "@/components/LikeButton";
+
+// export async function generateStaticParams() {
+//   const courses = await getCourses();
+//   return courses.map((course) => ({ id: course.id }));
+// }
+
+// export default async function CoursePage({
+//   params,
+// }: {
+//   params: Promise<{ id: string }>;
+// }) {
+//   const { id } = await params;
+
+//   if (id === "broken") {
+//     throw new Error("This error was thrown on purpose to test the Error Boundary.");
+//   }
+
+//   const course = await getCourse(id);
+
+//   if (!course) {
+//     notFound();
+//   }
+
+//   return (
+//     <main className="p-8">
+//       <h1 className="text-3xl font-bold mb-2">{course.title}</h1>
+//       <p className="text-gray-600 mb-4">{course.description}</p>
+//       <p className="mb-4">Credits: {course.credits}</p>
+//       <LikeButton initialLikes={course.likes} />
+//     </main>
+//   );
+// }
+
+
+
+import { getCourse } from "@/lib/courses";
 import { notFound } from "next/navigation";
 import LikeButton from "@/components/LikeButton";
-
-export async function generateStaticParams() {
-  const courses = await getCourses();
-  return courses.map((course) => ({ id: course.id }));
-}
+import { EnrollForm } from "@/components/EnrollForm";
 
 export default async function CoursePage({
   params,
@@ -29,7 +63,9 @@ export default async function CoursePage({
       <h1 className="text-3xl font-bold mb-2">{course.title}</h1>
       <p className="text-gray-600 mb-4">{course.description}</p>
       <p className="mb-4">Credits: {course.credits}</p>
-      <LikeButton initialLikes={course.likes} />
+      
+      <LikeButton courseId={course.id} initialLikes={course.likes} />
+      <EnrollForm courseId={course.id} />
     </main>
   );
 }
