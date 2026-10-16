@@ -1,20 +1,54 @@
+// "use client";
+
+// export default function CourseError({
+//   error,
+//   reset,
+// }: {
+//   error: Error & { digest?: string };
+//   reset: () => void;
+// }) {
+//   return (
+//     <main className="p-8">
+//       <h1 className="text-2xl font-bold mb-4 text-red-600">
+//         Something went wrong!
+//       </h1>
+//       <p className="mb-4 text-muted-foreground">{error.message}</p>
+//       <button
+//         onClick={() => reset()}
+//         className="px-4 py-2 border rounded-lg hover:bg-gray-50 transition"
+//       >
+//         Try again
+//       </button>
+//     </main>
+//   );
+// }
+
+
 "use client";
+
+import { useEffect } from "react";
 
 export default function CourseError({
   error,
-  reset,
+  retry,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
+  retry: () => void;
 }) {
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
   return (
     <main className="p-8">
       <h1 className="text-2xl font-bold mb-4 text-red-600">
         Something went wrong!
       </h1>
-      <p className="mb-4 text-muted-foreground">{error.message}</p>
+      <p className="mb-4 text-muted-foreground">
+        Could not load the data. The backend may not be running.
+      </p>
       <button
-        onClick={() => reset()}
+        onClick={() => retry()}
         className="px-4 py-2 border rounded-lg hover:bg-gray-50 transition"
       >
         Try again
